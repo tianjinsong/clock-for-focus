@@ -1,0 +1,23 @@
+function dis=cal_distance(Vi,Vj,LL)
+%% 计算节点之间的距离
+%% Vi,Vj 是N*2 矩阵，代表节点的坐标:[x,y]或[经度，维度]
+%% LL：是否为经纬度坐标，如果有则表示为经纬度坐标
+
+%% 判断是否为经纬度坐标
+if nargin()==2
+    LL=0; % 不是经纬度
+else
+    LL=1; % 是
+end
+
+
+%% 如果是经纬度坐标
+if LL==1
+   dis=distance('gc',Vi(:,2:-1:1),Vj(:,2:-1:1),almanac('earth','wgs84'));
+end
+
+
+%% 如果是[x,y]坐标
+if LL==0
+    dis=pdist2(Vi,Vj);
+end
